@@ -3,14 +3,10 @@ title: About This Site
 tags: [info, about]
 ---
 
-# ℹ️ About This Project
+# ℹ️ About Monash BEST Knowledge Hub
 
-This is a Knowledge Transfer site for engineering documentation and notes.
+This site serves as a **centralized knowledge repository** for Monash BEST, bringing together all engineering documentation, reports, notes, and learning materials in one accessible location.
 
-It uses:
+Its purpose is to streamline knowledge sharing and make it easy for team members and collaborators to find and contribute important resources.
 
-- [Quartz 4](https://quartz.jzhao.xyz) for site generation
-- Markdown for content
-- GitHub Actions + GitHub Pages for deployment
-
-Want to contribute? Fork the repo and start editing!
+Want to contribute? Fork the repo and start adding your valuable insights!
