@@ -16,7 +16,7 @@ const config: QuartzConfig = {
       provider: "plausible",
     },
     locale: "en-US",
-  baseUrl: "quartz.jzhao.xyz",
+  baseUrl: "https://monashbest-engineering.github.io/KnowledgeTransfer/",
   ignorePatterns: ["private", "templates", ".obsidian"],
   defaultDateType: "modified",
   output: "public",  // <--- Add this line here
