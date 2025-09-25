@@ -16,10 +16,11 @@ const config: QuartzConfig = {
       provider: "plausible",
     },
     locale: "en-US",
-    baseUrl: "quartz.jzhao.xyz",
-    ignorePatterns: ["private", "templates", ".obsidian"],
-    defaultDateType: "modified",
-    theme: {
+  baseUrl: "quartz.jzhao.xyz",
+  ignorePatterns: ["private", "templates", ".obsidian"],
+  defaultDateType: "modified",
+  output: "public",  // <--- Add this line here
+  theme: {
       fontOrigin: "googleFonts",
       cdnCaching: true,
       typography: {
