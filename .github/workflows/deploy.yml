@@ -22,12 +22,28 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v4
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18  # use 20 if your project uses it instead
+          node-version: 20   # bump this if Quartz needs newer node
 
-      - na
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Quartz site
+        run: npm run build
+
+      - name: Upload built site artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "public"   # make sure this matches where your build puts output
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
