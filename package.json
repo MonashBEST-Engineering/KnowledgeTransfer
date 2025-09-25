@@ -4,9 +4,9 @@
   "private": true,
   "version": "4.5.2",
   "type": "module",
-  "author": "jackyzha0 <j.zhao2k19@gmail.com>",
+  "author": "MonashBEST",
   "license": "MIT",
-  "homepage": "https://quartz.jzhao.xyz",
+  "homepage": "https://monashbest-engineering.github.io/KnowledgeTransfer/",
   "repository": {
     "type": "git",
     "url": "https://github.com/jackyzha0/quartz.git"
@@ -18,7 +18,7 @@
     "format": "npx prettier . --write",
     "test": "tsx --test",
     "profile": "0x -D prof ./quartz/bootstrap-cli.mjs build --concurrency=1",
-    "build": "quartz build"
+    "build": "npx quartz build"
     
   },
   "engines": {
