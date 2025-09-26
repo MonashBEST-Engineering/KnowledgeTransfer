@@ -1,6 +1,100 @@
 import { FileTrieNode } from "../../util/fileTrie"
 import { FullSlug, resolveRelative, simplifySlug } from "../../util/path"
 import { ContentDetails } from "../../plugins/emitters/contentIndex"
+import script from "./scripts/explorer.inline"
+
+// ─────────────────────────────────────────────
+// ⬇️ Build Category Dropdown Section
+// ─────────────────────────────────────────────
+const categoryMap: Record<string, { title: string; slug: string }[]> = {}
+
+for (const [slug, details] of entries) {
+  const categories = details.frontmatter?.categories ?? []
+  for (const cat of categories) {
+    if (!categoryMap[cat]) categoryMap[cat] = []
+    categoryMap[cat].push({ title: details.title, slug })
+  }
+}
+
+// Skip if no categories exist
+if (Object.keys(categoryMap).length > 0) {
+  const categoryContainer = document.createElement("li")
+  categoryContainer.className = "category-folder"
+
+  const folderHeader = document.createElement("div")
+  folderHeader.className = "folder-container"
+  folderHeader.style.cursor = "pointer"
+
+  const icon = document.createElement("svg")
+  icon.setAttribute("xmlns", "http://www.w3.org/2000/svg")
+  icon.setAttribute("width", "12")
+  icon.setAttribute("height", "12")
+  icon.setAttribute("viewBox", "5 8 14 8")
+  icon.setAttribute("fill", "none")
+  icon.setAttribute("stroke", "currentColor")
+  icon.setAttribute("stroke-width", "2")
+  icon.setAttribute("stroke-linecap", "round")
+  icon.setAttribute("stroke-linejoin", "round")
+  icon.classList.add("folder-icon")
+  icon.innerHTML = `<polyline points="6 9 12 15 18 9"></polyline>`
+
+  const button = document.createElement("button")
+  button.className = "folder-button"
+  const span = document.createElement("span")
+  span.className = "folder-title"
+  span.textContent = "Categories"
+  button.appendChild(span)
+
+  folderHeader.appendChild(icon)
+  folderHeader.appendChild(button)
+
+  const outer = document.createElement("div")
+  outer.className = "folder-outer open"
+
+  const list = document.createElement("ul")
+  list.className = "content"
+
+  // Build each category and its notes
+  for (const [category, notes] of Object.entries(categoryMap)) {
+    const catLi = document.createElement("li")
+    catLi.className = "category-group"
+
+    const catHeader = document.createElement("button")
+    catHeader.className = "folder-button"
+    catHeader.style.fontWeight = "bold"
+    catHeader.style.cursor = "pointer"
+    catHeader.textContent = category
+
+    const subList = document.createElement("ul")
+    subList.className = "content collapsed"
+
+    // Toggle dropdown behavior
+    catHeader.onclick = () => {
+      subList.classList.toggle("collapsed")
+      subList.classList.toggle("open")
+    }
+
+    for (const note of notes) {
+      const noteLi = document.createElement("li")
+      const a = document.createElement("a")
+      a.href = `/${note.slug}`
+      a.textContent = note.title
+      noteLi.appendChild(a)
+      subList.appendChild(noteLi)
+    }
+
+    catLi.appendChild(catHeader)
+    catLi.appendChild(subList)
+    list.appendChild(catLi)
+  }
+
+  outer.appendChild(list)
+  categoryContainer.appendChild(folderHeader)
+  categoryContainer.appendChild(outer)
+
+  // Insert above file list
+  explorerUl.insertBefore(categoryContainer, explorerUl.firstChild)
+}
 
 type MaybeHTMLElement = HTMLElement | undefined
 
