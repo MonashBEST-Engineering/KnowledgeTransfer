@@ -1,5 +1,5 @@
 ---
-title: Monash BEST Purchasing & Procurement SOP
+title: Purchasing & Procurement
 tags: [finance, coupa, reimbursement, purchases]
 ---
 **Last revision:** 03/09/2024
