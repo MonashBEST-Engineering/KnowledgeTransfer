@@ -3,99 +3,6 @@ import { FullSlug, resolveRelative, simplifySlug } from "../../util/path"
 import { ContentDetails } from "../../plugins/emitters/contentIndex"
 import script from "./scripts/explorer.inline"
 
-// ─────────────────────────────────────────────
-// ⬇️ Build Category Dropdown Section
-// ─────────────────────────────────────────────
-const categoryMap: Record<string, { title: string; slug: string }[]> = {}
-
-for (const [slug, details] of entries) {
-  const categories = details.frontmatter?.categories ?? []
-  for (const cat of categories) {
-    if (!categoryMap[cat]) categoryMap[cat] = []
-    categoryMap[cat].push({ title: details.title, slug })
-  }
-}
-
-// Skip if no categories exist
-if (Object.keys(categoryMap).length > 0) {
-  const categoryContainer = document.createElement("li")
-  categoryContainer.className = "category-folder"
-
-  const folderHeader = document.createElement("div")
-  folderHeader.className = "folder-container"
-  folderHeader.style.cursor = "pointer"
-
-  const icon = document.createElement("svg")
-  icon.setAttribute("xmlns", "http://www.w3.org/2000/svg")
-  icon.setAttribute("width", "12")
-  icon.setAttribute("height", "12")
-  icon.setAttribute("viewBox", "5 8 14 8")
-  icon.setAttribute("fill", "none")
-  icon.setAttribute("stroke", "currentColor")
-  icon.setAttribute("stroke-width", "2")
-  icon.setAttribute("stroke-linecap", "round")
-  icon.setAttribute("stroke-linejoin", "round")
-  icon.classList.add("folder-icon")
-  icon.innerHTML = `<polyline points="6 9 12 15 18 9"></polyline>`
-
-  const button = document.createElement("button")
-  button.className = "folder-button"
-  const span = document.createElement("span")
-  span.className = "folder-title"
-  span.textContent = "Categories"
-  button.appendChild(span)
-
-  folderHeader.appendChild(icon)
-  folderHeader.appendChild(button)
-
-  const outer = document.createElement("div")
-  outer.className = "folder-outer open"
-
-  const list = document.createElement("ul")
-  list.className = "content"
-
-  // Build each category and its notes
-  for (const [category, notes] of Object.entries(categoryMap)) {
-    const catLi = document.createElement("li")
-    catLi.className = "category-group"
-
-    const catHeader = document.createElement("button")
-    catHeader.className = "folder-button"
-    catHeader.style.fontWeight = "bold"
-    catHeader.style.cursor = "pointer"
-    catHeader.textContent = category
-
-    const subList = document.createElement("ul")
-    subList.className = "content collapsed"
-
-    // Toggle dropdown behavior
-    catHeader.onclick = () => {
-      subList.classList.toggle("collapsed")
-      subList.classList.toggle("open")
-    }
-
-    for (const note of notes) {
-      const noteLi = document.createElement("li")
-      const a = document.createElement("a")
-      a.href = `/${note.slug}`
-      a.textContent = note.title
-      noteLi.appendChild(a)
-      subList.appendChild(noteLi)
-    }
-
-    catLi.appendChild(catHeader)
-    catLi.appendChild(subList)
-    list.appendChild(catLi)
-  }
-
-  outer.appendChild(list)
-  categoryContainer.appendChild(folderHeader)
-  categoryContainer.appendChild(outer)
-
-  // Insert above file list
-  explorerUl.insertBefore(categoryContainer, explorerUl.firstChild)
-}
-
 type MaybeHTMLElement = HTMLElement | undefined
 
 interface ParsedOptions {
@@ -114,6 +21,7 @@ type FolderState = {
 }
 
 let currentExplorerState: Array<FolderState>
+
 function toggleExplorer(this: HTMLElement) {
   const nearestExplorer = this.closest(".explorer") as HTMLElement
   if (!nearestExplorer) return
@@ -124,7 +32,6 @@ function toggleExplorer(this: HTMLElement) {
   )
 
   if (!explorerCollapsed) {
-    // Stop <html> from being scrollable when mobile explorer is open
     document.documentElement.classList.add("mobile-no-scroll")
   } else {
     document.documentElement.classList.remove("mobile-no-scroll")
@@ -136,16 +43,12 @@ function toggleFolder(evt: MouseEvent) {
   const target = evt.target as MaybeHTMLElement
   if (!target) return
 
-  // Check if target was svg icon or button
   const isSvg = target.nodeName === "svg"
 
-  // corresponding <ul> element relative to clicked button/folder
   const folderContainer = (
     isSvg
-      ? // svg -> div.folder-container
-        target.parentElement
-      : // button.folder-button -> div -> div.folder-container
-        target.parentElement?.parentElement
+      ? target.parentElement
+      : target.parentElement?.parentElement
   ) as MaybeHTMLElement
   if (!folderContainer) return
   const childFolderContainer = folderContainer.nextElementSibling as MaybeHTMLElement
@@ -153,7 +56,6 @@ function toggleFolder(evt: MouseEvent) {
 
   childFolderContainer.classList.toggle("open")
 
-  // Collapse folder container
   const isCollapsed = !childFolderContainer.classList.contains("open")
   setFolderState(childFolderContainer, isCollapsed)
 
@@ -206,7 +108,6 @@ function createFolderNode(
   folderContainer.dataset.folderpath = folderPath
 
   if (opts.folderClickBehavior === "link") {
-    // Replace button with link for link behavior
     const button = titleContainer.querySelector(".folder-button") as HTMLElement
     const a = document.createElement("a")
     a.href = resolveRelative(currentSlug, folderPath)
@@ -219,13 +120,10 @@ function createFolderNode(
     span.textContent = node.displayName
   }
 
-  // if the saved state is collapsed or the default state is collapsed
   const isCollapsed =
     currentExplorerState.find((item) => item.path === folderPath)?.collapsed ??
     opts.folderDefaultState === "collapsed"
 
-  // if this folder is a prefix of the current path we
-  // want to open it anyways
   const simpleFolderPath = simplifySlug(folderPath)
   const folderIsPrefixOfCurrentSlug =
     simpleFolderPath === currentSlug.slice(0, simpleFolderPath.length)
@@ -259,7 +157,6 @@ async function setupExplorer(currentSlug: FullSlug) {
       mapFn: new Function("return " + (dataFns.mapFn || "undefined"))(),
     }
 
-    // Get folder state from local storage
     const storageTree = localStorage.getItem("fileTree")
     const serializedExplorerState = storageTree && opts.useSavedState ? JSON.parse(storageTree) : []
     const oldIndex = new Map<string, boolean>(
@@ -269,6 +166,16 @@ async function setupExplorer(currentSlug: FullSlug) {
     const data = await fetchData
     const entries = [...Object.entries(data)] as [FullSlug, ContentDetails][]
     const trie = FileTrieNode.fromEntries(entries)
+
+    // Build category map
+    const categoryMap: Record<string, { title: string; slug: string }[]> = {}
+    for (const [slug, details] of entries) {
+      const categories = details.frontmatter?.categories ?? []
+      for (const cat of categories) {
+        if (!categoryMap[cat]) categoryMap[cat] = []
+        categoryMap[cat].push({ title: details.title, slug })
+      }
+    }
 
     // Apply functions in order
     for (const fn of opts.order) {
@@ -285,7 +192,6 @@ async function setupExplorer(currentSlug: FullSlug) {
       }
     }
 
-    // Get folder paths for state management
     const folderPaths = trie.getFolderPaths()
     currentExplorerState = folderPaths.map((path) => {
       const previousState = oldIndex.get(path)
@@ -299,30 +205,103 @@ async function setupExplorer(currentSlug: FullSlug) {
     const explorerUl = explorer.querySelector(".explorer-ul")
     if (!explorerUl) continue
 
-    // Create and insert new content
+    // Insert category dropdown ABOVE everything else
+    if (Object.keys(categoryMap).length > 0) {
+      const categoryContainer = document.createElement("li")
+      categoryContainer.className = "category-folder"
+
+      const folderHeader = document.createElement("div")
+      folderHeader.className = "folder-container"
+      folderHeader.style.cursor = "pointer"
+
+      const icon = document.createElement("svg")
+      icon.setAttribute("xmlns", "http://www.w3.org/2000/svg")
+      icon.setAttribute("width", "12")
+      icon.setAttribute("height", "12")
+      icon.setAttribute("viewBox", "5 8 14 8")
+      icon.setAttribute("fill", "none")
+      icon.setAttribute("stroke", "currentColor")
+      icon.setAttribute("stroke-width", "2")
+      icon.setAttribute("stroke-linecap", "round")
+      icon.setAttribute("stroke-linejoin", "round")
+      icon.classList.add("folder-icon")
+      icon.innerHTML = `<polyline points="6 9 12 15 18 9"></polyline>`
+
+      const button = document.createElement("button")
+      button.className = "folder-button"
+      const span = document.createElement("span")
+      span.className = "folder-title"
+      span.textContent = "Categories"
+      button.appendChild(span)
+
+      folderHeader.appendChild(icon)
+      folderHeader.appendChild(button)
+
+      const outer = document.createElement("div")
+      outer.className = "folder-outer open"
+
+      const list = document.createElement("ul")
+      list.className = "content"
+
+      for (const [category, notes] of Object.entries(categoryMap)) {
+        const catLi = document.createElement("li")
+        catLi.className = "category-group"
+
+        const catHeader = document.createElement("button")
+        catHeader.className = "folder-button"
+        catHeader.style.fontWeight = "bold"
+        catHeader.style.cursor = "pointer"
+        catHeader.textContent = category
+
+        const subList = document.createElement("ul")
+        subList.className = "content collapsed"
+
+        catHeader.onclick = () => {
+          subList.classList.toggle("collapsed")
+          subList.classList.toggle("open")
+        }
+
+        for (const note of notes) {
+          const noteLi = document.createElement("li")
+          const a = document.createElement("a")
+          a.href = `/${note.slug}`
+          a.textContent = note.title
+          noteLi.appendChild(a)
+          subList.appendChild(noteLi)
+        }
+
+        catLi.appendChild(catHeader)
+        catLi.appendChild(subList)
+        list.appendChild(catLi)
+      }
+
+      outer.appendChild(list)
+      categoryContainer.appendChild(folderHeader)
+      categoryContainer.appendChild(outer)
+
+      explorerUl.insertBefore(categoryContainer, explorerUl.firstChild)
+    }
+
+    // Now insert the file/folder nodes
     const fragment = document.createDocumentFragment()
     for (const child of trie.children) {
       const node = child.isFolder
         ? createFolderNode(currentSlug, child, opts)
         : createFileNode(currentSlug, child)
-
       fragment.appendChild(node)
     }
-    explorerUl.insertBefore(fragment, explorerUl.firstChild)
+    explorerUl.appendChild(fragment)
 
-    // restore explorer scrollTop position if it exists
     const scrollTop = sessionStorage.getItem("explorerScrollTop")
     if (scrollTop) {
       explorerUl.scrollTop = parseInt(scrollTop)
     } else {
-      // try to scroll to the active element if it exists
       const activeElement = explorerUl.querySelector(".active")
       if (activeElement) {
         activeElement.scrollIntoView({ behavior: "smooth" })
       }
     }
 
-    // Set up event handlers
     const explorerButtons = explorer.getElementsByClassName(
       "explorer-toggle",
     ) as HTMLCollectionOf<HTMLElement>
@@ -331,7 +310,6 @@ async function setupExplorer(currentSlug: FullSlug) {
       window.addCleanup(() => button.removeEventListener("click", toggleExplorer))
     }
 
-    // Set up folder click handlers
     if (opts.folderClickBehavior === "collapse") {
       const folderButtons = explorer.getElementsByClassName(
         "folder-button",
@@ -353,7 +331,6 @@ async function setupExplorer(currentSlug: FullSlug) {
 }
 
 document.addEventListener("prenav", async () => {
-  // save explorer scrollTop position
   const explorer = document.querySelector(".explorer-ul")
   if (!explorer) return
   sessionStorage.setItem("explorerScrollTop", explorer.scrollTop.toString())
@@ -363,7 +340,6 @@ document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
   const currentSlug = e.detail.url
   await setupExplorer(currentSlug)
 
-  // if mobile hamburger is visible, collapse by default
   for (const explorer of document.getElementsByClassName("explorer")) {
     const mobileExplorer = explorer.querySelector(".mobile-explorer")
     if (!mobileExplorer) return
@@ -371,8 +347,6 @@ document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
     if (mobileExplorer.checkVisibility()) {
       explorer.classList.add("collapsed")
       explorer.setAttribute("aria-expanded", "false")
-
-      // Allow <html> to be scrollable when mobile explorer is collapsed
       document.documentElement.classList.remove("mobile-no-scroll")
     }
 
@@ -381,8 +355,6 @@ document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
 })
 
 window.addEventListener("resize", function () {
-  // Desktop explorer opens by default, and it stays open when the window is resized
-  // to mobile screen size. Applies `no-scroll` to <html> in this edge case.
   const explorer = document.querySelector(".explorer")
   if (explorer && !explorer.classList.contains("collapsed")) {
     document.documentElement.classList.add("mobile-no-scroll")
