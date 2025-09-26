@@ -268,3 +268,11 @@ li:has(> .folder-outer:not(.open)) > .folder-container > svg {
     overscroll-behavior: none;
   }
 }
+
+.category-group > ul.content.collapsed {
+  display: none;
+}
+.category-group > ul.content.open {
+  display: block;
+}
+
