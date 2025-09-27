@@ -1,6 +1,6 @@
 ---
 title: Recruitment Process
-tags: [recruitment, process, onboarding]
+tags: [recruitment, process, onboarding,operations]
 ---
 
 # 📝 Recruitment Process Documentation
