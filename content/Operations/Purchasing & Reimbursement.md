@@ -1,6 +1,6 @@
 ---
 title: Purchasing & Procurement
-tags: [finance, coupa, reimbursement, purchases]
+tags: [finance, coupa, reimbursement, purchases,operations]
 ---
 **Last revision:** 03/09/2024
 
