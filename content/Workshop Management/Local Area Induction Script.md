@@ -1,7 +1,9 @@
 ---
-title:
-**Local Area Induction**
+title: **Local Area Induction**
+tags: [Makerspace, LAI, Induction, Script, Local Area, Safety, Requirement, Mandatory]
 ---
+
+**Last Revision:16/10/2025**
 
 [**A. General Local Area Induction
 2**](#a.-general-local-area-induction)
