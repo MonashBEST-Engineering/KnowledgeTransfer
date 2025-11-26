@@ -1,12 +1,6 @@
 ---
-title: |
-  []{#_t3yzo034bivh .anchor}Tab 1
-
-  []{#_sa0lhrvpw65c
-  .anchor}![](media/image2.png){width="2.5067672790901137in"
-  height="2.4704363517060366in"}
-
-  []{#_j1dkj7jgbg9 .anchor}**Local Area Induction**
+title:
+**Local Area Induction**
 ---
 
 [**A. General Local Area Induction
