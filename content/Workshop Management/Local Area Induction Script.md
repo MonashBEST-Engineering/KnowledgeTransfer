@@ -88,7 +88,7 @@ Please note in addition to the standard warning and evacuation alarms this room 
 
 - No poisons or drugs in this space. You are not to be in this space if you are under the influence of drugs and/or alcohol.
 
-No ionising radiation
+- No ionising radiation
 
 - No Cryogenics
 
@@ -135,7 +135,7 @@ height="5.68747375328084in"}
 Figure 1: Current Monash Boring Excavation Student Team workshop layout
 as of September 2025
 
-**G.1.1 Tables**
+**Tables**
 
 - Central tables are generally for technical work
 
@@ -163,7 +163,7 @@ as of September 2025
 
     - Cutterhead and Cutter teeth assemblies
 
-**G.1.2 JBS Storage Units**
+**JBS Storage Units**
 
 - Electrical and Mechanical
 
@@ -175,7 +175,7 @@ as of September 2025
 
 - Take some time to figure out what we have and where everything is
 
-> Inductor to indicate the location and purpose of each table and JBS unit]
+> Inductor to indicate the location and purpose of each table and JBS unit
 
 **MBEST TBM Operation**
 
@@ -248,5 +248,5 @@ Please make sure we are prioritising TBM work in the workshop. If there is any T
 # Sign Off 
 This concludes the MBEST Local Area Induction. Upon completion of this induction, all inductees must complete the google form:
 
-**All inductees must also sign the **[MBEST - Local Area Induction Checklist - S2, 2025](https://docs.google.com/document/u/1/d/1vMyhSFcG8ufTYEMxCBUeoXoEYr1hdvpzu1dOaJ-tMnQ/edit)
+**All inductees must also sign the [MBEST - Local Area Induction Checklist - S2, 2025](https://docs.google.com/document/u/1/d/1vMyhSFcG8ufTYEMxCBUeoXoEYr1hdvpzu1dOaJ-tMnQ/edit)
 upon completion.**
