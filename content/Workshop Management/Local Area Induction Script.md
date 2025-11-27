@@ -25,8 +25,8 @@ Please navigate to the associated google form on your phone and confirm your und
 
 You are allowed to enter this space if you:
 
-  > **Are a current Monash student and have not finished your studies and been course completed.**
-  > If you are a current member of MBEST and if you have card access.
+  - **Are a current Monash student and have not finished your studies and been course completed.**
+  - **If you are a current member of MBEST and if you have card access.**
 
 **If you do not have card access but need access to the space, please speak to Makerspace staff.**
 
@@ -129,8 +129,7 @@ documentation:
 
 **MBEST Workshop Organisation**
 
-![](media/makerspace map.jpeg){width="5.640625546806649in"
-height="5.68747375328084in"}
+![](media/makerspace_map.jpeg)
 
 Figure 1: Current Monash Boring Excavation Student Team workshop layout
 as of September 2025
