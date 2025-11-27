@@ -1,5 +1,5 @@
 ---
-title: **Local Area Induction**
+title: Local Area Induction
 tags: [Makerspace, LAI, Induction, Script, Local Area, Safety, Requirement, Mandatory]
 ---
 
