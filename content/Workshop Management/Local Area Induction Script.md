@@ -19,7 +19,7 @@ Please navigate to the associated google form on your phone and confirm your und
 
 
 
-**[MBEST - Local Area Induction Form - S2, 2025]**(https://forms.gle/kSBo4hj988DG9C456)
+[MBEST - Local Area Induction Form - S2, 2025](https://forms.gle/kSBo4hj988DG9C456)
 
 # Access Requirements
 
