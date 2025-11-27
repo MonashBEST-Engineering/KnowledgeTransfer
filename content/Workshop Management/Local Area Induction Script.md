@@ -129,7 +129,7 @@ documentation:
 
 **MBEST Workshop Organisation**
 
-![](media/image3.jpg){width="5.640625546806649in"
+![](media/makerspace map.jpeg){width="5.640625546806649in"
 height="5.68747375328084in"}
 
 Figure 1: Current Monash Boring Excavation Student Team workshop layout
