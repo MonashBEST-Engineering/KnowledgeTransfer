@@ -1,5 +1,5 @@
 ---
-title: Local Area Induction
+title: Local Area Induction Script
 tags: [Makerspace, LAI, Induction, Script, Local Area, Safety, Requirement, Mandatory]
 ---
 
@@ -129,7 +129,7 @@ documentation:
 
 **MBEST Workshop Organisation**
 
-![](./media/makerspace_map.jpeg)
+![map](./media/makerspace_map.jpeg)
 
 Figure 1: Current Monash Boring Excavation Student Team workshop layout
 as of September 2025
