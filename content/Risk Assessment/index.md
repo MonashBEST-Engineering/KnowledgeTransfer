@@ -1,7 +1,5 @@
 ---
-title: Welcome to the Monash BEST Knowledge Transfer Website
+title: Risk Assessment Documentation
 ---
 
-# 👋 Welcome
-
-All learning elements for **Monash BEST**, including reports, notes, and resources, are collected here for easy access and knowledge sharing.
+The processes for Risk Assessments are in this folder
