@@ -129,7 +129,7 @@ documentation:
 
 **MBEST Workshop Organisation**
 
-![makerspace_map.jpeg](/content/media/makerspace_map.jpeg)
+![[/content/media/makerspace_map.jpeg\|800]]
 
 Figure 1: Current Monash Boring Excavation Student Team workshop layout
 as of September 2025
