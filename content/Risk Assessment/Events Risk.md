@@ -1,7 +1,6 @@
 ---
 title: Event Risk Management Plan – Instructions
-graph: 
--[[Risk Assessment]]
+graph: [[Risk Assessment]]
 ---
 
 **Last Revision: CURRENTLY UPDATING**
