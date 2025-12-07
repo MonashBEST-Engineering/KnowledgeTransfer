@@ -1,9 +1,9 @@
 ---
 title: Event Risk Management Plan – Instructions
 ---
-<!--
+
 [[Risk Assessment/risk assessments]]
--->
+
 **Last Revision: CURRENTLY UPDATING**
 
 # Getting to SARAH Event Risk Management Plan
