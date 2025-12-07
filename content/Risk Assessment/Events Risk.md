@@ -1,6 +1,5 @@
 ---
 title: Event Risk Management Plan – Instructions
-tags: [events, risk assessment, operations, technical, SARAH, ERMP, OHS]
 ---
 <!--
 [[Risk Assessment/risk assessments]]
